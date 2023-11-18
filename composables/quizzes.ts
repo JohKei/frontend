@@ -1,4 +1,5 @@
 import { useState } from '#app';
+import { GetAllMatchingsQuery } from '~/types/courseTypes';
 import { GET } from './fetch';
 export const useQuizzes = () => useState<any[]>('quizzes', () => []);
 export const useQuiz = () => useState<any>('quiz', () => null);
@@ -401,4 +402,12 @@ export async function rateQuiz(taskId: any, subTaskid: any, body: any) {
 
 
 }
+// Questions: check what TaskId is
+export async function getAllMatchings(taskId: string, query?: GetAllMatchingsQuery){
+	const response = await GET(`challenges/tasks/${taskId}/matchings`, query)
+	// Todo: later create a state for this
+	return response
+}
+
+
 
