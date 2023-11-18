@@ -86,6 +86,10 @@
               {{ t("Headings.EmptyCodingChallenge") }}
             </p>
           </section>
+
+		  <section v-if="selectedButton === 3">
+			<QuizMatchings/>
+		  </section>
         </div>
 
         <div
@@ -175,6 +179,7 @@ export default {
       { name: "Buttons.Video" },
       { name: "Buttons.Quiz" },
       { name: "Buttons.Challenge" },
+	  { name: "Buttons.Matchings" }
     ];
 
     const activeSection = computed(() => {
