@@ -42,5 +42,48 @@ export class GetAllMatchingsQuery {
 	rated: boolean | undefined = undefined;
 	enabled: boolean | undefined = undefined;
 	retired: boolean | undefined = undefined;
-    creator: string | undefined = undefined;
+	creator: string | undefined = undefined;
+}
+
+export class CreateNewMatchingBody {
+	xp: number | null = null;
+	coins: number | null = null;
+	left: string[] = [];
+	right: string[] = [];
+	solution: string[] = [];
+}
+
+export class UpdateMatchingBody extends CreateNewMatchingBody{
+	task_id: string = "";
+	enabled: boolean = true;
+	retired: boolean = false;
+}
+
+export class Matching {
+	id: string = "";
+	task_id: string = "";
+	type: string = ""; // Question: What enum types are there?
+	creator: string = ""; // Information: "CODING_CHALLENGE"
+	creation_timestamp: string = "";
+	solved: boolean = false;
+	rated: boolean = false;
+	enabled: boolean = false;
+	retired: boolean = false;
+	xp: number = 0;
+	coins: number = 0;
+	left: string[] = [];
+	right: string[] = [];
+}
+
+export class MatchingWithSolution extends Matching {
+	solution: string[] = [];
+}
+
+export type MatchingSolve = {
+	answer: string[]
+}
+
+export type MatchingAnswer = {
+	solved: boolean
+	correct: number
 }

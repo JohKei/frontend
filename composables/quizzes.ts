@@ -1,5 +1,6 @@
 import { useState } from '#app';
-import { GetAllMatchingsQuery } from '~/types/courseTypes';
+import { CreateNewMatchingBody, GetAllMatchingsQuery, Matching, MatchingWithSolution, UpdateMatchingBody } from '~/types/courseTypes';
+import type { MatchingSolve, MatchingAnswer } from '~/types/courseTypes';
 import { GET } from './fetch';
 export const useQuizzes = () => useState<any[]>('quizzes', () => []);
 export const useQuiz = () => useState<any>('quiz', () => null);
@@ -402,11 +403,35 @@ export async function rateQuiz(taskId: any, subTaskid: any, body: any) {
 
 
 }
-// Questions: check what TaskId is
+// Question: check what TaskId is
 export async function getAllMatchings(taskId: string, query?: GetAllMatchingsQuery){
-	const response = await GET(`challenges/tasks/${taskId}/matchings`, query)
+	const response : Matching[] = await GET(`challenges/tasks/${taskId}/matchings`, query)
 	// Todo: later create a state for this
 	return response
+}
+
+export async function createNewMatching (taskId: string, body: CreateNewMatchingBody) {
+	//@ts-ignore Information: ts-ignore because POST wants undefined | null
+	const response :MatchingWithSolution = await POST(`challenges/tasks/${taskId}/matchings`, body)
+}
+
+export async function getMatchingById(taskId: string, subTaskId:string) {
+	// Todo: create state for current matching
+	const response :Matching = await GET(`challenges/tasks/${taskId}/matchings/${subTaskId}`)
+}
+
+export async function updateMatching(taskId: string, subTaskId:string, body: UpdateMatchingBody){
+	//@ts-ignore Information: ts-ignore because PATCH wants undefined | null
+	const response :MatchingWithSolution = await PATCH(`challenges/tasks/${taskId}/matchings/${subTaskId}`, body)
+}
+
+export async function getMatchingWithSolution(taskId: string, subTaskId:string){
+	const response :MatchingWithSolution = await GET(`/challenges/tasks/${taskId}/matchings/${subTaskId}/solution`)
+}
+
+export async function attemptToSolveMatching(taskId: string, subTaskId:string, answer: MatchingSolve){
+	//@ts-ignore Information: ts-ignore because POST wants undefined | null
+	const response :MatchingAnswer = await POST(`/challenges/tasks/${taskId}/matchings/${subTaskId}/attempts`, answer)
 }
 
 
